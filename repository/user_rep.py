@@ -5,9 +5,9 @@ from fastapi.params import Depends
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
-from ..models import User
-from ..dependencies import get_db
-from ..schemas import UserCreate
+from models import User
+from dependencies import get_db
+from schemas import UserCreate
 from passlib.context import CryptContext
 
 class UserRepository:
@@ -33,10 +33,10 @@ class UserRepository:
         db_user = User(    #**user.dict()
             username=user.username,
             email=user.email,
-            password=pass_hash
+            hashed_password=pass_hash
         )
 
-        self.db.add(user)
+        self.db.add(db_user)
         self.db.commit()
         self.db.refresh(db_user)
 
