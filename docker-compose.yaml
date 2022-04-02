@@ -1,5 +1,18 @@
 version: "3.9"
 services:
+  fastapi:
+    build: .
+    container_name: fastapi
+    command: bash .sh
+
+    volumes:
+      - .:/usr/src/
+    ports:
+      - "8000:8000"
+#    environment:
+#      -
+    depends_on:
+      - db
   db:
     image: bitnami/postgresql
     ports:
