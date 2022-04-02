@@ -1,5 +1,5 @@
 import jwt
-from fastapi import HTTPExeption
+from fastapi import HTTPException
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 
@@ -27,11 +27,11 @@ class Auth:
             payload=jwt.decode(token,self.secret, algorithms=['HS256'])
             if payload['scope']=='access_token':
                 return payload['sub']
-            raise HTTPExeption(status_code=401, detail='Scope for the token is invalid')
+            raise HTTPException(status_code=401, detail='Scope for the token is invalid')
         except jwt.ExpiredSignatureError:
-            raise HTTPExeption(status_code=401, detail='Token expired')
+            raise HTTPException(status_code=401, detail='Token expired')
         except jwt.InvalidTokenError:
-            raise HTTPExeption(status_code=401, detail='Invalid token')
+            raise HTTPException(status_code=401, detail='Invalid token')
 
     def encode_refresh_token(self,username):
         payload = {
@@ -49,8 +49,8 @@ class Auth:
                  username=payload['sub']
                  new_token = self.encode_token(username)
                  return new_token
-            raise HTTPExeption(status_code=401, detail='Invalid scope for token')
+            raise HTTPException(status_code=401, detail='Invalid scope for token')
         except jwt.ExpiredSignatureError:
-            raise HTTPExeption(status_code=401, detail='Refresh token expired')
+            raise HTTPException(status_code=401, detail='Refresh token expired')
         except jwt.InvalidTokenError:
-            raise HTTPExeption(status_code=401, detail='Invalid refresh token')
+            raise HTTPException(status_code=401, detail='Invalid refresh token')
