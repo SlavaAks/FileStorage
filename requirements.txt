@@ -19,3 +19,5 @@ SQLAlchemy~=1.4.34
 PyJWT~=2.3.0
 uvicorn~=0.17.6
 python-dotenv~=0.20.0
+psycopg2~=2.9.3
+email-validator~=1.1.3
