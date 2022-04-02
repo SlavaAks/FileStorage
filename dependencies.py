@@ -1,7 +1,7 @@
 from functools import lru_cache
-
-from . import config
-from . import database
+from sqlalchemy.orm import Session
+import config
+import database
 
 # Вызывается по время внедрения зависимости
 def get_db() -> Session:
