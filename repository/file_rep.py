@@ -10,6 +10,7 @@ from models import File
 from dependencies import get_db
 from passlib.context import CryptContext
 
+
 class FileRepository:
     def __init__(self, db: Session = Depends(get_db)):
         self.db = db  # произойдет внедрение зависимостей
@@ -18,7 +19,7 @@ class FileRepository:
         query = self.db.query(File)
         return query.filter(File.id == id).first()
 
-    def url_exist(self,url:str):
+    def url_exist(self, url: str):
         query = self.db.query(File)
         return query.filter(File.url == url).first()
 
@@ -26,9 +27,12 @@ class FileRepository:
         query = self.db.query(File)
         return query.filter(File.owner_username == username).all()
 
+    def delete_file(self, url: str):
+        query = self.db.query(File)
+        return query.filter(File.url == url).delete()
 
-    def create(self, url,owner_username,filename) -> File:
-        db_file = File(    #**user.dict()
+    def create(self, url, owner_username, filename) -> File:
+        db_file = File(  # **user.dict()
             url=url,
             owner_username=owner_username,
             filename=filename,
