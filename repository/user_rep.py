@@ -6,6 +6,7 @@ from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
 from models import User
+
 from dependencies import get_db
 from schemas import UserCreate
 from passlib.context import CryptContext
@@ -14,13 +15,13 @@ class UserRepository:
     def __init__(self, db: Session = Depends(get_db)):
         self.db = db  # произойдет внедрение зависимостей
 
-    def find(self, id: int) -> User:
-        query = self.db.query(User)
-        return query.filter(User.id == id).first()
-
     def find_by_username(self, username: str):
         query = self.db.query(User)
         return query.filter(User.username == username).first()
+
+    def find_by_email(self, email: EmailStr):
+        query = self.db.query(User)
+        return query.filter(User.email == email).first()
 
     def all(self, skip: int = 0, max: int = 100) -> List[User]:
         query = self.db.query(User)

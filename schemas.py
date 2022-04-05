@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel,EmailStr
+from pydantic import BaseModel,EmailStr,validator
 
 
 class UserBase(BaseModel):
@@ -15,7 +15,14 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
+    email:EmailStr
     is_active: bool
+
+    class Config:
+        orm_mode = True
+
+class FileBase(BaseModel):
+    filename:str
 
     class Config:
         orm_mode = True
