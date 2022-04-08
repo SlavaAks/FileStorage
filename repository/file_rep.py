@@ -27,15 +27,21 @@ class FileRepository:
         query = self.db.query(File)
         return query.filter(File.owner_username == username).all()
 
+    def find_by_hash(self,hash:str):
+        query=self.db.query(File)
+        return query.filter(File.hash_content==hash).first()
+
+
     def delete_file(self, url: str):
         query = self.db.query(File)
         return query.filter(File.url == url).delete()
 
-    def create(self, url, owner_username, filename) -> File:
+    def create(self, url, owner_username, filename,hash_content) -> File:
         db_file = File(  # **user.dict()
             url=url,
             owner_username=owner_username,
             filename=filename,
+            hash_content=hash_content
         )
 
         self.db.add(db_file)

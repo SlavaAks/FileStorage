@@ -21,6 +21,7 @@ class File(Model):
     url = Column(String,unique=True,index=True)
     owner_username = Column(String, ForeignKey("users.username"))
     filename = Column(String)
+    hash_content=Column(String)
     create_date = Column(DateTime, default=datetime.now)
 
     owner = relationship("User", back_populates="items")
